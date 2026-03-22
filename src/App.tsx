@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import VideoListPage from './pages/VideoListPage';
 import LinksPage from './pages/LinksPage';
+import AdminPage from './pages/AdminPage';
 import playlistData from './data.json';
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
           <Route path="/albums" element={<VideoListPage title="ALBUM" videos={playlistData.albums} />} />
           <Route path="/specials" element={<VideoListPage title="企画もの" videos={playlistData.specials} />} />
           <Route path="/links" element={<LinksPage />} />
+          <Route path="/admin" element={<AdminPage />} />
         </Routes>
       </main>
       <footer>
