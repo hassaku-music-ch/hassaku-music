@@ -3,6 +3,7 @@ import Navbar from './components/Navbar';
 import VideoListPage from './pages/VideoListPage';
 import LinksPage from './pages/LinksPage';
 import AdminPage from './pages/AdminPage';
+import ViewCounter from './components/ViewCounter';
 import playlistData from './data.json';
 
 function App() {
@@ -20,7 +21,10 @@ function App() {
         </Routes>
       </main>
       <footer>
-        &copy; {new Date().getFullYear()} 八朔 MUSIC CHANNEL. All rights reserved.
+        <ViewCounter />
+        <div style={{ marginTop: '1rem' }}>
+          &copy; {new Date().getFullYear()} 八朔 MUSIC CHANNEL. All rights reserved.
+        </div>
       </footer>
     </div>
   );

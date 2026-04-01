@@ -543,3 +543,41 @@ footer {
   border-top: 1px solid var(--border-color);
   margin-top: auto;
 }
+
+/* View Counter Styles */
+.view-counter-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.view-counter {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(252, 163, 17, 0.3);
+  border-radius: 8px;
+  overflow: hidden;
+  font-family: 'Inter', sans-serif;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.view-label {
+  background: var(--accent-gradient);
+  color: white;
+  padding: 0.5rem 0.8rem;
+  font-weight: 800;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.view-number {
+  color: var(--accent-color);
+  padding: 0.5rem 1rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: 0.1em;
+  background: rgba(25, 25, 30, 0.8);
+  text-shadow: 0 0 10px rgba(252, 163, 17, 0.4);
+}
