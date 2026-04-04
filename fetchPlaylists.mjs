@@ -8,26 +8,40 @@ const playlists = {
 };
 
 async function fetchAll() {
-  const result = {};
+  const dataFile = './src/data.json';
+  let result = {};
+  
+  // 既存のデータを読み込むことで、エラー時に内容が消えるのを防ぐ
+  if (fs.existsSync(dataFile)) {
+    try {
+      result = JSON.parse(fs.readFileSync(dataFile, 'utf8'));
+    } catch (e) {
+      console.error('Failed to parse existing data.json');
+    }
+  }
+
   for (const [key, id] of Object.entries(playlists)) {
     try {
       console.log(`Fetching ${key} (${id})...`);
       const list = await ytpl(id, { limit: 100 });
-      // Map it to minimal items
-      result[key] = list.items.map(item => ({
-        id: item.id,
-        title: item.title,
-        url: item.shortUrl,
-        thumbnail: item.bestThumbnail.url
-      }));
-      console.log(`Fetched ${result[key].length} items for ${key}.`);
+      
+      if (list && list.items && list.items.length > 0) {
+        result[key] = list.items.map(item => ({
+          id: item.id,
+          title: item.title,
+          url: item.shortUrl,
+          thumbnail: item.bestThumbnail.url
+        }));
+        console.log(`Fetched ${result[key].length} items for ${key}.`);
+      } else {
+        console.log(`No items found for ${key}. Keeping existing data.`);
+      }
     } catch (e) {
-      console.error(`Error fetching ${key}: ${e.message}`);
-      result[key] = [];
+      console.error(`Error fetching ${key}: ${e.message}. Keeping existing data.`);
     }
   }
   
-  fs.writeFileSync('./src/data.json', JSON.stringify(result, null, 2));
+  fs.writeFileSync(dataFile, JSON.stringify(result, null, 2));
   console.log('Done writing src/data.json');
 }
 
