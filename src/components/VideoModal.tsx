@@ -8,13 +8,14 @@ interface Video {
 
 interface VideoModalProps {
     video: Video | null;
+    playlistIds?: string[];
     onClose: () => void;
-    onNext?: () => void;
-    onPrev?: () => void;
 }
 
-const VideoModal = ({ video, onClose }: VideoModalProps) => {
+const VideoModal = ({ video, playlistIds, onClose }: VideoModalProps) => {
     if (!video) return null;
+
+    const playlistParam = playlistIds && playlistIds.length > 0 ? `&playlist=${playlistIds.join(',')}` : '';
 
     return (
         <div className="modal-overlay" onClick={onClose}>
@@ -22,7 +23,7 @@ const VideoModal = ({ video, onClose }: VideoModalProps) => {
                 <button className="close-button" onClick={onClose}>&times;</button>
                 <div className="iframe-container">
                     <iframe
-                        src={`https://www.youtube.com/embed/${video.id}?autoplay=1`}
+                        src={`https://www.youtube.com/embed/${video.id}?autoplay=1${playlistParam}`}
                         title={video.title}
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowFullScreen

@@ -30,6 +30,16 @@ const VideoListPage = ({ title, videos }: Props) => {
         return arr;
     }, [videos, sortOrder]);
 
+    const currentIndex = selectedVideo ? displayVideos.findIndex(v => v.id === selectedVideo.id) : -1;
+    // URL長制限を考慮し、選択動画の次から最大50件までを連続再生リストにする
+    const playlistIds = currentIndex >= 0 ? displayVideos.slice(currentIndex + 1, currentIndex + 51).map(v => v.id) : [];
+
+    const handlePlayAll = () => {
+        if (displayVideos.length > 0) {
+            setSelectedVideo(displayVideos[0]);
+        }
+    };
+
     return (
         <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -47,6 +57,18 @@ const VideoListPage = ({ title, videos }: Props) => {
 
             <div className="controls-container">
                 <div className="view-toggles">
+                    <button
+                        className="control-btn play-all-btn"
+                        onClick={handlePlayAll}
+                        title="連続再生"
+                        style={{ background: 'var(--accent-gradient)', color: 'white', border: 'none', padding: '0.5rem 1.2rem', gap: '0.5rem', marginRight: 'auto' }}
+                    >
+                        <Play size={18} fill="white" />
+                        <span style={{ fontWeight: 'bold' }}>すべて再生</span>
+                    </button>
+                </div>
+                
+                <div className="view-toggles" style={{ marginLeft: 'auto' }}>
                     <button
                         className={`control-btn ${viewMode === 'list' ? 'active' : ''}`}
                         onClick={() => setViewMode('list')}
@@ -105,6 +127,7 @@ const VideoListPage = ({ title, videos }: Props) => {
             {selectedVideo && (
                 <VideoModal
                     video={selectedVideo}
+                    playlistIds={playlistIds}
                     onClose={() => setSelectedVideo(null)}
                 />
             )}
