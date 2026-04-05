@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 const AdminPage = () => {
     const [password, setPassword] = useState('');
-    const [status, setStatus] = useState<null | 'sending' | 'success' | 'error'>(null);
+
 
     const handleUpdate = async () => {
         // パスワードは「8339」
@@ -12,16 +12,8 @@ const AdminPage = () => {
             return;
         }
 
-        setStatus('sending');
-        // Simulate network delay for UX
-        setTimeout(() => {
-            setStatus('success');
-            setPassword('');
-            // Open GitHub Actions workflow page after a brief delay
-            setTimeout(() => {
-                window.open('https://github.com/hassaku-music-v1/hassaku-music/actions/workflows/deploy.yml', '_blank');
-            }, 1000);
-        }, 800);
+        // 待たずに即座にGitHubの画面へジャンプする
+        window.location.href = 'https://github.com/hassaku-music-v1/hassaku-music/actions/workflows/deploy.yml';
     };
 
     return (
@@ -58,7 +50,6 @@ const AdminPage = () => {
                 />
                 <button
                     onClick={handleUpdate}
-                    disabled={status === 'sending'}
                     className="control-btn"
                     style={{
                         padding: '1rem',
@@ -70,26 +61,12 @@ const AdminPage = () => {
                         fontSize: '1.1rem',
                         border: 'none',
                         boxShadow: '0 8px 15px rgba(252, 163, 17, 0.3)',
-                        cursor: status === 'sending' ? 'not-allowed' : 'pointer',
-                        opacity: status === 'sending' ? 0.7 : 1
+                        cursor: 'pointer'
                     }}
                 >
-                    {status === 'sending' ? '📡 リクエスト送信中...' : '最新データに更新する'}
+                    最新データに更新する
                 </button>
             </div>
-
-            {status === 'success' && (
-                <div style={{ marginTop: '2rem', padding: '1.5rem', background: '#dcfce7', color: '#166534', borderRadius: '12px', border: '1px solid #bbf7d0' }}>
-                    <strong>✅ 認証成功！</strong><br/>
-                    GitHubの管理画面が開きますので、そこにある <strong>「Run workflow」</strong> というボタンを押すと更新が始まります。
-                </div>
-            )}
-            {status === 'error' && (
-                <div style={{ marginTop: '2rem', padding: '1.5rem', background: '#fee2e2', color: '#991b1b', borderRadius: '12px', border: '1px solid #fecaca' }}>
-                    <strong>❌ エラーが発生しました。</strong><br/>
-                    通信状況を確認してください。
-                </div>
-            )}
         </motion.div>
     );
 };
