@@ -6,8 +6,8 @@ const AdminPage = () => {
     const [status, setStatus] = useState<null | 'sending' | 'success' | 'error'>(null);
 
     const handleUpdate = async () => {
-        // パスワードは「839（ハッサク）」
-        if (password !== '839') {
+        // パスワードは「8339」
+        if (password !== '8339') {
             alert('パスワードが間違っています。');
             return;
         }
