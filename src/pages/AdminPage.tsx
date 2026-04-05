@@ -13,7 +13,7 @@ const AdminPage = () => {
         }
 
         // 待たずに即座にGitHubの画面へジャンプする
-        window.location.href = 'https://github.com/hassaku-music-v1/hassaku-music/actions/workflows/deploy.yml';
+        window.location.href = 'https://github.com/hassaku-music-ch/hassaku-music/actions/workflows/deploy.yml';
     };
 
     return (
