@@ -13,22 +13,15 @@ const AdminPage = () => {
         }
 
         setStatus('sending');
-        try {
-            // ユーザー指定のNetlify Build Hook URL
-            const response = await fetch('https://api.netlify.com/build_hooks/69bfc01d1e80d0638bc2447a', {
-                method: 'POST'
-            });
-            
-            if (response.ok) {
-                setStatus('success');
-                setPassword('');
-            } else {
-                setStatus('error');
-            }
-        } catch (error) {
-            console.error(error);
-            setStatus('error');
-        }
+        // Simulate network delay for UX
+        setTimeout(() => {
+            setStatus('success');
+            setPassword('');
+            // Open GitHub Actions workflow page after a brief delay
+            setTimeout(() => {
+                window.open('https://github.com/hassaku-music-v1/hassaku-music/actions/workflows/deploy.yml', '_blank');
+            }, 1000);
+        }, 800);
     };
 
     return (
@@ -87,8 +80,8 @@ const AdminPage = () => {
 
             {status === 'success' && (
                 <div style={{ marginTop: '2rem', padding: '1.5rem', background: '#dcfce7', color: '#166534', borderRadius: '12px', border: '1px solid #bbf7d0' }}>
-                    <strong>✅ 更新リクエストを送信しました！</strong><br/>
-                    約2〜3分後にサイトを再読み込みしてください。
+                    <strong>✅ 認証成功！</strong><br/>
+                    GitHubの管理画面が開きますので、そこにある <strong>「Run workflow」</strong> というボタンを押すと更新が始まります。
                 </div>
             )}
             {status === 'error' && (
