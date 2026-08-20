@@ -34,7 +34,7 @@ const AdminPage = () => {
 
         try {
             const res = await fetch(
-                'https://api.github.com/repos/hassaku-music-ch/hassaku-music/actions/workflows/deploy.yml/dispatches',
+                'https://api.github.com/repos/hassaku-music-ch/hassaku-music/dispatches',
                 {
                     method: 'POST',
                     headers: {
@@ -42,7 +42,7 @@ const AdminPage = () => {
                         Accept: 'application/vnd.github+json',
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ ref: 'main' }),
+                    body: JSON.stringify({ event_type: 'manual-update' }),
                 }
             );
 
@@ -51,11 +51,11 @@ const AdminPage = () => {
                 setPassword('');
             } else {
                 const data = await res.json().catch(() => ({}));
-                setErrorMsg(data.message || `Error ${res.status}`);
+                setErrorMsg(`[${res.status}] ${data.message || JSON.stringify(data)}`);
                 setStatus('error');
             }
-        } catch (e) {
-            setErrorMsg('ネットワークエラーが発生しました。');
+        } catch (e: unknown) {
+            setErrorMsg(e instanceof Error ? e.message : 'ネットワークエラー');
             setStatus('error');
         }
     };
