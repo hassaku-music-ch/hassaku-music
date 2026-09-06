@@ -34,7 +34,7 @@ const AdminPage = () => {
 
         try {
             const res = await fetch(
-                'https://api.github.com/repos/hassaku-music-ch/hassaku-music/dispatches',
+                'https://api.github.com/repos/hassaku-music-ch/hassaku-music/actions/workflows/deploy.yml/dispatches',
                 {
                     method: 'POST',
                     headers: {
@@ -42,7 +42,7 @@ const AdminPage = () => {
                         Accept: 'application/vnd.github+json',
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ event_type: 'manual-update' }),
+                    body: JSON.stringify({ ref: 'main' }),
                 }
             );
 

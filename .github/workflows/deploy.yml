@@ -6,6 +6,8 @@ on:
   workflow_dispatch:
   repository_dispatch:
     types: [manual-update]
+  schedule:
+    - cron: '0 0 * * 1'  # 毎週月曜日 9:00 JST (0:00 UTC)
 
 permissions:
   contents: read
